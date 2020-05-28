@@ -1,0 +1,41 @@
+<hr>
+
+<app-date-picker></app-date-picker>
+
+<hr>
+
+<div class="table-responsive" *ngIf='room && intervals'>
+  <div [ngClass]="getTitleStyle()">
+    <p>{{ getTitle() }}</p>
+  </div>
+  <div class="col-xs-6">
+    <table class="table">
+      <tbody>
+        <tr app-interval-row *ngFor="let interval of intervals | slice:0:(math.ceil(intervals.length / 2))"
+          [interval]=interval></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-xs-6">
+    <table class="table">
+      <tbody>
+        <tr app-interval-row
+          *ngFor="let interval of intervals | slice:(math.ceil(intervals.length / 2)):(intervals.length)"
+          [interval]=interval></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr>
+
+<button type="button" class="btn btn-primary center-block" [ngClass]="{'disabled': !intervalsSelected}"
+  (click)="onBook()">Book</button>
+
+<hr>
+
+<!-- <div class="row" *ngIf='room'>
+  <div class="col-xs-12">
+    <p *ngFor="let booking of room.bookings">{{ booking.startTime }} - {{ booking.endTime }}</p>
+  </div>
+</div> -->

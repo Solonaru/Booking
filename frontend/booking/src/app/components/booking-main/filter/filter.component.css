@@ -1,0 +1,16 @@
+.filter {
+    padding: 20px;
+    border: 1px solid #0d3980;
+    border-radius: 5px;
+}
+
+.filter_title {
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .filter {
+        margin-bottom: 30px;
+    }
+}

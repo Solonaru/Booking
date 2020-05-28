@@ -3,6 +3,9 @@ package com.project.entities;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.repository.NoRepositoryBean;
+
+@NoRepositoryBean
 public interface IEntityService<Entity, ID> {
 	
 	public Optional<Entity> findById(ID entityId);

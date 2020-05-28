@@ -1,0 +1,7 @@
+<form class="filter">
+    <h4 class="filter_title">{{ filterGroupTitle }}</h4>
+    <app-interval-filter-field
+        *ngFor="let filterField of filterFields; let i = index"
+        [filterField]="filterField"
+        [index]="i"></app-interval-filter-field>
+</form>

@@ -2,27 +2,24 @@ package com.project.utils;
 
 import java.util.logging.Logger;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class DataLogger {
 	private static final Logger LOGGER = Logger.getLogger(DataLogger.class.getName());
 
 	/* ----- CONSTRUCTORS ----- */
-	public DataLogger() {
+	private DataLogger() {
 		super();
 	}
 
 	/* ----- METHODS ----- */
-	public void printInfo(String messagge) {
+	public static void printInfo(String messagge) {
 		LOGGER.info(messagge);
 	}
 
-	public void printWarning(String messagge) {
+	public static void printWarning(String messagge) {
 		LOGGER.warning(messagge);
 	}
 
-	public void printError(String messagge) {
+	public static void printError(String messagge) {
 		LOGGER.severe(messagge);
 	}
 }

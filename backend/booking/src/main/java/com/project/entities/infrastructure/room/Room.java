@@ -76,4 +76,13 @@ public class Room {
 		return bookings;
 	}
 
+	/* ----- METHODS ----- */
+	public String getBuildingName() {
+		return this.getFloor().getBuilding().getName();
+	}
+
+	public String getFloorNr() {
+		return this.getFloor().getNr();
+	}
+
 }

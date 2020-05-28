@@ -1,9 +1,8 @@
 package com.project.utils;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -27,9 +26,6 @@ import com.project.entities.infrastructure.room.Room;
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired
-	private DataLogger logger;
-
-	@Autowired
 	private IAccountService accountService;
 	@Autowired
 	private IUsrService usrService;
@@ -47,13 +43,13 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	/* ----- METHODS ----- */
 	private void loadData() {
-		logger.printInfo("Starting data loading...");
+		DataLogger.printInfo("Starting data loading...");
 
 		createAndPersistAccounts();
 		createAndPersistInfrastructure();
 		createAndPersistBookings();
 
-		logger.printInfo("Data successfully loaded.");
+		DataLogger.printInfo("Data successfully loaded.");
 	}
 
 	private void createAndPersistAccounts() {
@@ -72,6 +68,11 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	}
 
 	private void createAndPersistInfrastructure() {
+		this.persistBloculB();
+		this.persistBloculC();
+	}
+
+	private void persistBloculB() {
 		Room room001 = new Room("B301");
 		Room room002 = new Room("B305");
 		Room room003 = new Room("B307");
@@ -82,20 +83,56 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		Room room201 = new Room("B5");
 		Room room202 = new Room("B3");
 
-		Floor floor0 = new Floor(0);
+		Floor floor0 = new Floor("GF");
 		floor0.addRoom(room001);
 		floor0.addRoom(room002);
 		floor0.addRoom(room003);
 		floor0.addRoom(room004);
-		Floor floor1 = new Floor(1);
+		Floor floor1 = new Floor("1");
 		floor1.addRoom(room101);
 		floor1.addRoom(room102);
 		floor1.addRoom(room103);
-		Floor floor2 = new Floor(2);
+		Floor floor2 = new Floor("2");
 		floor2.addRoom(room201);
 		floor2.addRoom(room202);
 
-		Building bulding = new Building("FEAA", "Str. FEAA nr.1");
+		Building bulding = new Building("Blocul B", "Str. FEAA nr.1");
+		bulding.addFloor(floor0);
+		bulding.addFloor(floor1);
+		bulding.addFloor(floor2);
+
+		this.buildingService.insert(bulding);
+	}
+
+	private void persistBloculC() {
+		Room room001 = new Room("C312");
+		Room room002 = new Room("C305");
+		Room room003 = new Room("C307");
+		Room room004 = new Room("C320");
+		Room room101 = new Room("C405");
+		Room room102 = new Room("C1");
+		Room room201 = new Room("C5");
+		Room room202 = new Room("C3");
+		Room room203 = new Room("C4");
+		Room room204 = new Room("C503");
+		Room room205 = new Room("C513");
+
+		Floor floor0 = new Floor("GF");
+		floor0.addRoom(room001);
+		floor0.addRoom(room002);
+		floor0.addRoom(room003);
+		floor0.addRoom(room004);
+		Floor floor1 = new Floor("1");
+		floor1.addRoom(room101);
+		floor1.addRoom(room102);
+		Floor floor2 = new Floor("2");
+		floor2.addRoom(room201);
+		floor2.addRoom(room202);
+		floor2.addRoom(room203);
+		floor2.addRoom(room204);
+		floor2.addRoom(room205);
+
+		Building bulding = new Building("Blocul C", "Str. FEAA nr.13");
 		bulding.addFloor(floor0);
 		bulding.addFloor(floor1);
 		bulding.addFloor(floor2);
@@ -104,30 +141,62 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	}
 
 	private void createAndPersistBookings() {
+		int day = 11;
+		int month = 03;
+
 		List<Usr> usrs = this.usrService.findAll();
 		List<Room> rooms = this.roomService.findAll();
 
-		Booking booking1 = new Booking(LocalTime.of(10, 0), LocalTime.of(12, 0), LocalDate.of(2019, 10, 12),
-				LocalDateTime.of(2019, 10, 11, 16, 32), "Meeting");
-		booking1.setRoom(rooms.get(0));
-		booking1.setUsr(usrs.get(1));
-		Booking booking2 = new Booking(LocalTime.of(12, 0), LocalTime.of(14, 0), LocalDate.of(2019, 10, 12),
-				LocalDateTime.of(2019, 10, 11, 16, 37), "Students evaluation");
-		booking2.setRoom(rooms.get(0));
-		booking2.setUsr(usrs.get(1));
-		Booking booking3 = new Booking(LocalTime.of(8, 0), LocalTime.of(12, 0), LocalDate.of(2019, 10, 14),
-				LocalDateTime.of(2019, 10, 13, 11, 22), "Professors Meeting");
-		booking3.setRoom(rooms.get(5));
-		booking3.setUsr(usrs.get(0));
-		Booking booking4 = new Booking(LocalTime.of(9, 0), LocalTime.of(10, 0), LocalDate.of(2019, 10, 14),
-				LocalDateTime.of(2019, 10, 13, 11, 35), "Meeting");
-		booking4.setRoom(rooms.get(7));
-		booking4.setUsr(usrs.get(0));
+		Booking booking1 = new Booking(LocalDateTime.of(2020, month, day, 10, 0),
+				LocalDateTime.of(2020, month, day, 12, 0), "Meeting");
+		booking1.setRoom(this.getRnFromList(rooms));
+		booking1.setUsr(this.getRnFromList(usrs));
+		Booking booking2 = new Booking(LocalDateTime.of(2020, month, day, 12, 0),
+				LocalDateTime.of(2020, month, day, 14, 0), "Students evaluation");
+		booking2.setRoom(this.getRnFromList(rooms));
+		booking2.setUsr(this.getRnFromList(usrs));
+		Booking booking3 = new Booking(LocalDateTime.of(2020, month, day + 1, 8, 0),
+				LocalDateTime.of(2020, month, day + 1, 12, 0), "Professors Meeting");
+		booking3.setRoom(this.getRnFromList(rooms));
+		booking3.setUsr(this.getRnFromList(usrs));
+		Booking booking4 = new Booking(LocalDateTime.of(2020, month, day + 1, 9, 0),
+				LocalDateTime.of(2020, month, day + 1, 10, 0), "Meeting");
+		booking4.setRoom(this.getRnFromList(rooms));
+		booking4.setUsr(this.getRnFromList(usrs));
+
+		Booking booking5 = new Booking(LocalDateTime.of(2020, month, day, 10, 0),
+				LocalDateTime.of(2020, month, day, 12, 0), "Professor's Meeting");
+		booking5.setRoom(this.getRnFromList(rooms));
+		booking5.setUsr(this.getRnFromList(usrs));
+		Booking booking6 = new Booking(LocalDateTime.of(2020, month, day + 2, 12, 0),
+				LocalDateTime.of(2020, month, day + 2, 14, 0), "Students evaluation");
+		booking6.setRoom(this.getRnFromList(rooms));
+		booking6.setUsr(this.getRnFromList(usrs));
+		Booking booking7 = new Booking(LocalDateTime.of(2020, month, day + 2, 8, 0),
+				LocalDateTime.of(2020, month, day + 2, 12, 0), "Meeting");
+		booking7.setRoom(this.getRnFromList(rooms));
+		booking7.setUsr(this.getRnFromList(usrs));
+		Booking booking8 = new Booking(LocalDateTime.of(2020, month, day, 9, 0),
+				LocalDateTime.of(2020, month, day, 10, 0), "Meeting");
+		booking8.setRoom(this.getRnFromList(rooms));
+		booking8.setUsr(this.getRnFromList(usrs));
 
 		this.bookingService.insert(booking1);
 		this.bookingService.insert(booking2);
 		this.bookingService.insert(booking3);
 		this.bookingService.insert(booking4);
+		this.bookingService.insert(booking5);
+		this.bookingService.insert(booking6);
+		this.bookingService.insert(booking7);
+		this.bookingService.insert(booking8);
+	}
+
+	private Integer getRnInteger(Integer min, Integer max) {
+		return new Random().nextInt(max - min + 1) + min;
+	}
+
+	private <T> T getRnFromList(List<T> elements) {
+		return elements.get(getRnInteger(0, elements.size() - 1));
 	}
 
 }

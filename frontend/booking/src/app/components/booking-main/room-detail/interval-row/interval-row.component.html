@@ -1,0 +1,8 @@
+<th class="content" scope="row" [ngClass]="{
+        'available': interval.available,
+        'unavailable': !interval.available,
+        'selectable': interval.selectable && interval.available && !interval.intermediary,
+        'unselectable': !interval.selectable,
+        'selected': interval.selected
+    }"
+    (click)="onClick()">{{ interval.getInterval() }}</th>

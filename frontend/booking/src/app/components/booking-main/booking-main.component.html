@@ -1,0 +1,14 @@
+<div class="booking-main">
+    <div class="row">
+        <div class="col-3 col-md-4 col-lg-3">
+            <app-filter [filterGroupTitle]="'Main filters'" [filterFields]="fields"></app-filter>
+            <app-interval-filter [filterGroupTitle]="'Interval filters'" [filterFields]="intervalFields"></app-interval-filter>
+        </div>
+        <div class="col-5 col-md-4 col-lg-5">
+            <app-rooms-list></app-rooms-list>
+        </div>
+        <div class="col-4 col-md-4 col-lg-4">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

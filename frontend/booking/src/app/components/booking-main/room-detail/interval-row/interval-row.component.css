@@ -1,0 +1,25 @@
+.available {
+    background-color: lightcyan;
+}
+
+.unavailable {
+    background-color: lightpink;
+}
+
+.selectable {
+    cursor: pointer;
+}
+
+.unselectable {
+    background-color: lightgrey;
+}
+
+.selected {
+    background-color: lightblue;
+    border: 2px solid lightskyblue;
+}
+
+.content {
+    text-align: center;
+    font-size: 1.4rem;
+}

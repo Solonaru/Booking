@@ -2,7 +2,6 @@ package com.project.entities.booking;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,10 +27,10 @@ public class Booking {
 	private Long id;
 
 	@Column(name = "startTime", updatable = false, nullable = false)
-	private LocalTime startTime;
+	private LocalDateTime startTime;
 
 	@Column(name = "endTime", updatable = false, nullable = false)
-	private LocalTime endTime;
+	private LocalDateTime endTime;
 
 	@Column(name = "date", updatable = false, nullable = false)
 	private LocalDate date;
@@ -57,14 +56,13 @@ public class Booking {
 		super();
 	}
 
-	public Booking(LocalTime startTime, LocalTime endTime, LocalDate date, LocalDateTime reservationDate,
-			String reason) {
+	public Booking(LocalDateTime startTime, LocalDateTime endTime, String reason) {
 		super();
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.date = date;
-		this.reservationDate = reservationDate;
 		this.reason = reason;
+		this.reservationDate = LocalDateTime.now();
+		this.date = this.startTime.toLocalDate();
 	}
 
 	/* ----- GETTERS & SETTERS ----- */
@@ -72,19 +70,19 @@ public class Booking {
 		return id;
 	}
 
-	public LocalTime getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(LocalTime startTime) {
+	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
 	}
 
-	public LocalTime getEndTime() {
+	public LocalDateTime getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(LocalTime endTime) {
+	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
 

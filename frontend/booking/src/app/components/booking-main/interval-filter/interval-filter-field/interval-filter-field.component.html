@@ -1,0 +1,6 @@
+<mat-form-field>
+    <mat-label>{{ filterField.selector }}</mat-label>
+    <mat-select [(value)]="selected">
+        <mat-option value="interval.getTime(filterField.selector)" *ngFor="let interval of intervals" (click)="onSelect(interval)" [disabled]="true">{{ interval.getTime(filterField.selector) }}</mat-option>
+    </mat-select>
+</mat-form-field>

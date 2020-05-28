@@ -1,0 +1,6 @@
+<mat-form-field>
+    <mat-label>{{ filterField.selector }}</mat-label>
+    <mat-select [(value)]="selected">
+        <mat-option value="" *ngFor="let value of values" (click)="onSelect(value)">{{ value }}</mat-option>
+    </mat-select>
+</mat-form-field>

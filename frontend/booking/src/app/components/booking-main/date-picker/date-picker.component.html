@@ -1,0 +1,13 @@
+<mat-form-field class="datepicker parent">
+    <input
+        matInput
+        [(ngModel)]="date"
+        (dateChange)="onChange($event)"
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="picker"
+        placeholder="Choose a date">
+        <!-- To apply weekend filter add: [matDatepickerFilter]="weekendFilter" -->
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

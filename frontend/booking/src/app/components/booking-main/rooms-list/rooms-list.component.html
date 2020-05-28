@@ -1,0 +1,14 @@
+<div class="row" *ngIf="rooms">
+    <div class="col-xs-6">
+        <app-room-item 
+            *ngFor="let room of rooms | slice:0:(math.ceil(rooms.length / 2)); let i = index"
+            [room]="room"
+            [index]="i"></app-room-item>
+    </div>
+    <div class="col-xs-6">
+        <app-room-item 
+            *ngFor="let room of rooms | slice:(math.ceil(rooms.length / 2)):(rooms.length); let i = index"
+            [room]="room"
+            [index]="i + (math.ceil(rooms.length / 2))"></app-room-item>
+    </div>
+</div>

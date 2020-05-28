@@ -28,7 +28,7 @@ public class Floor {
 	private Long id;
 
 	@Column(name = "nr", updatable = false, nullable = false)
-	private Integer nr;
+	private String nr;
 
 	@JsonIgnoreProperties(value = "floors")
 	@ManyToOne
@@ -44,7 +44,7 @@ public class Floor {
 		super();
 	}
 
-	public Floor(Integer nr) {
+	public Floor(String nr) {
 		super();
 		this.nr = nr;
 		this.rooms = new HashSet<Room>();
@@ -55,7 +55,7 @@ public class Floor {
 		return id;
 	}
 
-	public Integer getNr() {
+	public String getNr() {
 		return nr;
 	}
 

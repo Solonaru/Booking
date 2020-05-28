@@ -1,0 +1,12 @@
+.available {
+    background-color: lightcyan;
+}
+
+.unavailable {
+    background-color: lightpink;
+}
+
+.title {
+    text-align: center;
+    font-size: 20px;
+}
